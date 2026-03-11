@@ -140,3 +140,7 @@ https://reminderapi.onrender.com
 ```
 GET https://reminderapi.onrender.com/health
 ```
+
+## 👩‍💻 Autora
+
+Desenvolvido por [Jaqueline Reis](https://github.com/jaquelinereiss)

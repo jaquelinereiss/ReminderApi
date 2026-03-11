@@ -78,13 +78,11 @@ Authorization: Bearer {access_token}
 #### ▹ GET `/health`
 - Verifica se a API está funcionando.
 
-#
 
 ### 🔹 Auth
 #### ▹ POST `/auth/login`
 - Autentica um usuário e retorna um **access_token**.
 
-#
 
 ### 🔹 Reminders
 Todas as rotas abaixo exigem autenticação.

@@ -1,18 +1,27 @@
 import admin from "firebase-admin";
-import serviceAccount from "../config/firebase-service-account.json" with { type: "json" };
 
 let initialized = false;
 
 export function initFirebase() {
   if (initialized) return;
 
+  const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n");
+
+  if (!privateKey) {
+    throw new Error("FIREBASE_PRIVATE_KEY não definida");
+  }
+
   admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
+    credential: admin.credential.cert({
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      privateKey: privateKey,
+    }),
   });
 
-  initialized = true;
-
   console.log("Firebase inicializado...");
+
+  initialized = true;
 }
 
 export async function sendPush(
@@ -47,7 +56,7 @@ export async function sendPush(
       error.code === "messaging/invalid-registration-token" ||
       error.code === "messaging/registration-token-not-registered"
     ) {
-      console.warn("Token inválido, remover do banco:", token);
+      console.warn("Token inválido:", token);
     }
 
     throw error;
